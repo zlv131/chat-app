@@ -7,6 +7,8 @@ import {
   setUserMessage,
 } from "../../../store/reducers/chatSlice.ts";
 import { getHistoryChat, URL_GET } from "../../../api/api.ts";
+import {currentColor} from "../../../styles/theme.ts";
+import EmojiPicker from 'emoji-picker-react';
 
 const FormMessage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -15,6 +17,7 @@ const FormMessage: React.FC = () => {
   const token = useAppSelector((state) => state.userSlice.token);
   const socket = new WebSocket(`wss://edu.strada.one/websockets?${token}`);
 
+  const {colorMode} = useColorMode();
   const sendMessageToServer = (event) => {
     event.preventDefault();
     socket.send(JSON.stringify({ text: userMessage }));
@@ -29,14 +32,15 @@ const FormMessage: React.FC = () => {
     }
   };
 
+
   return (
     <div>
       <form onSubmit={(event) => sendMessageToServer(event)}>
-        <FormControl borderTop={"solid #6528f7 0.5vw"} isRequired>
+        <FormControl borderTop={"solid 0.5vw"} borderColor={currentColor(colorMode)} isRequired>
           <Flex mt={3} mb={3}>
             <Input
-              // variant={'brand'}
-              // focusBorderColor={"brand.200"}
+              focusBorderColor={currentColor(colorMode)}
+              borderColor={currentColor(colorMode)}
               value={userMessage}
               onChange={(event) => dispatch(setUserMessage(event.target.value))}
               placeholder="Your message..."
@@ -44,11 +48,11 @@ const FormMessage: React.FC = () => {
               ml={5}
             />
             <Button
+              borderColor={currentColor(colorMode)}
               type={"submit"}
               variant="outline"
               colorScheme="purple"
-              mr={5}
-            >
+              mr={5}>
               Send
             </Button>
           </Flex>

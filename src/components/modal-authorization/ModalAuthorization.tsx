@@ -5,14 +5,16 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  useDisclosure,
+  useDisclosure, useColorMode,
 } from "@chakra-ui/react";
 import Steppers from "../stepper/Steppers.tsx";
 import { useAppSelector } from "../../hooks/useAppSelector.ts";
 import FormAuthorization from "../form-authorization/FormAuthorization.tsx";
+import {currentColor} from "../../styles/theme.ts";
 const ModalAuthorization: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const currentStep = useAppSelector((state) => state.stepSlice.currentStep);
+  const {colorMode} = useColorMode();
 
   useEffect(() => {
     onOpen();
@@ -30,7 +32,7 @@ const ModalAuthorization: React.FC = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader fontSize="28" color="purple" textAlign="center">
+          <ModalHeader fontSize="28" color={currentColor(colorMode)} textAlign="center">
             Authorization
           </ModalHeader>
           <ModalBody>

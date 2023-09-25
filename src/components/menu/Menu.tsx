@@ -21,6 +21,9 @@ import { useAppDispatch } from "../../hooks/useAppDispatch.ts";
 import { setNickname } from "../../store/reducers/userSlice.ts";
 import { changeNickname, URL } from "../../api/api.ts";
 import Cookies from "js-cookie";
+import {AVATAR} from "../../constants";
+import {currentBackgroundColor, currentColor} from "../../styles/theme.ts";
+import AvatarSwiper from "../avatar-swiper/AvatarSwiper.tsx";
 
 const Menu: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -39,6 +42,7 @@ const Menu: React.FC = () => {
     Cookies.set("nickname", nickname, { expires: 7 });
   };
 
+
   return (
     <>
       <SettingsIcon
@@ -50,7 +54,7 @@ const Menu: React.FC = () => {
       />
       <Drawer isOpen={isOpen} placement="left" finalFocusRef={btnRef}>
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent background={currentBackgroundColor(colorMode)} >
           <DrawerCloseButton onClick={(event) => handleOnClick(event)} />
           <DrawerHeader fontSize={32}> Settings </DrawerHeader>
           <DrawerBody>
@@ -59,7 +63,7 @@ const Menu: React.FC = () => {
                 Nickname
               </Text>
               <Input
-                focusBorderColor={"primary"}
+                focusBorderColor={currentColor(colorMode)}
                 fontSize={20}
                 isRequired
                 value={nickname}
@@ -83,7 +87,8 @@ const Menu: React.FC = () => {
                 Avatar
               </Text>
               <WrapItem >
-                <Avatar size='xl' mt={4} name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />
+                <Avatar size='2xl' mt={4} m={2} name='Dan Abrahmov' src={AVATAR[0].IMG_URL} />
+                <Avatar size='2xl' mt={4} m={2} name='Dan Abrahmov' src={AVATAR[1].IMG_URL} />
               </WrapItem>
             </Flex>
           </DrawerBody>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Flex, Input } from "@chakra-ui/react";
+import {Button, Flex, Input, useColorMode} from "@chakra-ui/react";
 import { useAppSelector } from "../../hooks/useAppSelector.ts";
 import { useAppDispatch } from "../../hooks/useAppDispatch.ts";
 import { setCurrentStep } from "../../store/reducers/stepSlice.ts";
@@ -11,6 +11,7 @@ import {
 } from "../../store/reducers/userSlice.ts";
 import { changeNickname, URL } from "../../api/api.ts";
 import Cookies from "js-cookie";
+import {currentColor} from "../../styles/theme.ts";
 const FormAuthorization: React.FC = () => {
   const dispatch = useAppDispatch();
 
@@ -18,6 +19,8 @@ const FormAuthorization: React.FC = () => {
   const token = useAppSelector((state) => state.userSlice.token);
   const nickname = useAppSelector((state) => state.userSlice.nickname);
   const currentStep = useAppSelector((state) => state.stepSlice.currentStep);
+
+  const {colorMode} = useColorMode()
   const handleOnSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     switch (currentStep) {
@@ -47,7 +50,7 @@ const FormAuthorization: React.FC = () => {
             Email:
             <Input
               value={email}
-              focusBorderColor="purple"
+              focusBorderColor={currentColor(colorMode)}
               onChange={(event) => dispatch(setEmail(event.target.value))}
               type="email"
             />
@@ -58,7 +61,7 @@ const FormAuthorization: React.FC = () => {
             Code:
             <Input
               value={token}
-              focusBorderColor="purple"
+              focusBorderColor={currentColor(colorMode)}
               onChange={(event) => dispatch(setCode(event.target.value))}
               type="text"
             />
@@ -69,7 +72,7 @@ const FormAuthorization: React.FC = () => {
             Nickname:
             <Input
               value={nickname}
-              focusBorderColor="purple"
+              focusBorderColor={currentColor(colorMode)}
               onChange={(event) => dispatch(setNickname(event.target.value))}
               type="text"
             />
